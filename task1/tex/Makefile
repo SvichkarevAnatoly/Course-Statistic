@@ -5,7 +5,7 @@ read:	pdf clean_tmp
 	evince ${filename}.pdf &
 	
 pdf:	${filename}.tex
-	pdflatex ${filename}.tex > /dev/null
+	pdflatex ${filename}.tex
 
 clean_tmp:
 	rm -f ${filename}.{ps,log,aux,out,dvi,bbl,blg}
