@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc} % Кодировка исходного текста - utf8
 \usepackage[english,russian]{babel} % Поддержка языка - русского с английским
 \usepackage{indentfirst} % Отступ в первом абзаце
+\usepackage{amsmath} % Для знака модуля
 
 \title{Анализ мер положения} % Заголовок документа
 \author{Свичкарев А.\,В.} % Автор документа
@@ -36,8 +37,11 @@
 Оптимальность в статистике может быть только для множества выборок.
 
 \section{Равномерное распределение}
-
 Формула плотности:
-\( f(x) = \frac{1}{2\sqrt{3}}, x \leq \sqrt{3} \)
+\( \sigma(x) = \left\{
+	\begin{array}{cl}
+		\frac{1}{2\sqrt{3}}, & \mbox{если } \lvert x \rvert \leq \sqrt{3} \\
+		0, & \mbox{если } \lvert x \rvert > \sqrt{3}  \\
+\end{array} \right. \)
 
 \end{document} % Конец документа
