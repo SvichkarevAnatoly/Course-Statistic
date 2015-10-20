@@ -1,10 +1,14 @@
 library(tikzDevice)
 
-file_sample <- 'data/n.txt'
+readSample <- function(file_path){
+  sample <- read.table(file_path)
+  sample <- as.vector(t(sample))
+  return(sample)
+}
 
-sample <- read.table(file_sample)
-sample <- as.vector(t(sample))
+sample_n <- readSample('data/n.txt')
+sample_ne <- readSample('data/ne.txt')
 
 tikz('tex/boxplot.tex',width=3.5,height=3.5)
-boxplot(sample)
+boxplot(sample_n, sample_ne)
 dev.off()
