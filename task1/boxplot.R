@@ -8,10 +8,10 @@ readSample <- function(file_path){
 }
 
 # считать нормальную и загрязнённую выборки
-sample_n <- readSample('data/n.txt')
-sample_ne <- readSample('data/ne.txt')
+sample_n <- readSample('../data/n.txt')
+sample_ne <- readSample('../data/ne.txt')
 
 # генерация tex файла с боксплота
-tikz('tex/boxplot.tex',width=3.5,height=3.5)
+tikz('../tex/boxplot.tex',width=3.5,height=3.5)
 boxplot(sample_n, sample_ne)
 dev.off()

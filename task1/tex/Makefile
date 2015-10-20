@@ -1,14 +1,19 @@
 SHELL := /bin/bash
-filename=report1
+
+report=report1
+boxplot=boxplot
 
 read:	pdf clean_tmp
-	evince ${filename}.pdf &
+	evince ${report}.pdf &
 	
-pdf:	${filename}.tex
-	pdflatex ${filename}.tex
+pdf:	${report}.tex boxplot 
+	pdflatex ${report}.tex
+
+boxplot:
+	Rscript ../boxplot.R
 
 clean_tmp:
-	rm -f ${filename}.{ps,log,aux,out,dvi,bbl,blg}
+	rm -f ${report}.{ps,log,aux,out,dvi,bbl,blg} ${boxplot}.tex
 
 clean:
-	rm -f ${filename}.{ps,pdf,log,aux,out,dvi,bbl,blg}
+	rm -f ${report}.{ps,pdf,log,aux,out,dvi,bbl,blg} ${boxplot}.tex
