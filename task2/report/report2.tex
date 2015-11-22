@@ -6,6 +6,8 @@
 \usepackage{amsmath} % Для символа точек в выборке
 \usepackage{xfrac}
 \usepackage{listings}
+\usepackage{caption}
+\usepackage{float}
 
 \title{Лабораторная работа №2\\Ядерная оценка плотности распределения} % Заголовок документа
 \author{Свичкарев А.\,В.\\группа 53601/4\\СПбПУ} % Автор документа
@@ -42,7 +44,34 @@
 
 где \[S = \sqrt{\frac{1}{n}\sum_{i=1}^{n} (x_i-\bar{x})} = \frac{1}{10}\sqrt{\sum_{i=1}^{n}(x_i-\bar{x})}\]
 
+Для текущей выборки $h_{Silverman} \approx 0.398$.
+
+\begin{figure}[H]
+    \captionsetup{justification=centering}
+    \includegraphics[width=\textwidth]{plot1}
+    \caption{Сравнение плотности нормального распределения и ядерной оценки плотности с $h = h_{silverman}$.}
+\end{figure}
+
+\newpage
+Попробуем взять другие h - в 2 раза больше и в два раза меньше, чем $h_{Silverman}$:
+
+\begin{figure}[H]
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.9\textwidth]{plot2}
+    \caption{Сравнение плотности нормального распределения и ядерной оценки плотности с $h = 2 h_{silverman}$.}
+\end{figure}
+
+\begin{figure}[H]
+    \captionsetup{justification=centering}
+    \includegraphics[width=0.9\textwidth]{plot3}
+    \caption{Сравнение плотности нормального распределения и ядерной оценки плотности с $h = \frac{h_{silverman}}{2}$.}
+\end{figure}
+
 \section{Заключение}
-TODO2
+При увеличении значения h оценка плотности распределения становится более гладкой и пологой.
+
+При уменьшении h ядерная оценка плотности лучше покрывает график плотности распределения, однако появляется множество возмущений.
+
+При ядерной оценке плотности вероятности нормального распределения имеет смысл брать значения bandwidth parameter близкие к значению $h_{Silverman}$.
 
 \end{document} % Конец документа
