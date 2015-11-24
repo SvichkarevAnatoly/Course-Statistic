@@ -15,7 +15,8 @@ compute_coefs <- function(ro){
   
   # коэффициент корреляции Пирсона:
   cat("коэффициент корреляции Пирсона:\n")
-  print(cor(sample[,1], sample[,2]))
+  r <- cor(sample[,1], sample[,2])
+  print(r)
   #cor.test(sample[,1], sample[,2])
   
   # реализовал функцию sgn, чтобы в нуле давал +!
@@ -38,18 +39,36 @@ compute_coefs <- function(ro){
     return(result / nrow(sample))
   }
   cat("знаковый коэффициент корреляции:\n")
-  print(cor_sgn_median(sample))
+  rQ <- cor_sgn_median(sample)
+  print(rQ)
   
   # ранговый коэффициент корреляции Спирмена:
   cat("ранговый коэффициент корреляции Спирмена:\n")
-  print(cor(sample[,1], sample[,2], method = "spearman"))
+  rs <- cor(sample[,1], sample[,2], method = "spearman")
+  print(rs)
   #cor.test(sample[,1], sample[,2], method = "spearman")
   
   # коэффициент Кендела:
-  cat("коэффициент Кендела:")
-  print(cor(sample[,1], sample[,2], method = "kendall"))
+  cat("коэффициент Кендела:\n")
+  t <- cor(sample[,1], sample[,2], method = "kendall")
+  print(t)
   #cor.test(sample[,1], sample[,2], method = "kendall")
   cat("\n")
+  
+  # компенсация смещения
+  cat("компенсация знакового коэффициента корреляции:\n")
+  rQ_star <- sin((pi * rQ) / 2)
+  print(rQ_star)
+  
+  cat("компенсация рангового коэффициента корреляции Спирмена:\n")
+  rs_star <- 2*sin((pi * rs) / 6)
+  print(rs_star)
+  
+  cat("компенсация коэффициента Кендела:\n")
+  t_star <- sin((pi * t) / 2)
+  print(t_star)
+  
+  cat("----\n")
 }
 
 compute_coefs(0)
