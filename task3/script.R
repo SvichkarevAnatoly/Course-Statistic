@@ -4,7 +4,7 @@ library(MASS)
 # для генерации одинаковой выборки
 set.seed(0)
 
-compute_coefs <- function(ro){
+create_sample <- function(ro){
   # генерация выборки из 40 элементов с нулевым матожиданием по обоим осям
   # матрица сигма для задания дисперсии и корреляции по осям
   # по диагонали стоит дисперсия, два другие элемента обозначают корреляцию,
@@ -12,7 +12,11 @@ compute_coefs <- function(ro){
   cat("ro = "); print(ro)
   sample <- mvrnorm(40, mu = c(0, 0), Sigma = matrix(c(1, ro, ro, 1), 2), empirical = TRUE)
   #plot(sample)
-  
+  return(sample)
+}
+
+compute_coefs <- function(sample){
+  plot(sample)
   # коэффициент корреляции Пирсона:
   cat("коэффициент корреляции Пирсона:\n")
   r <- cor(sample[,1], sample[,2])
@@ -71,6 +75,34 @@ compute_coefs <- function(ro){
   cat("----\n")
 }
 
-compute_coefs(0)
-compute_coefs(0.5)
-compute_coefs(0.9)
+# добавление 2 фиксированных выбросов в выборки
+add_emissions <- function(sample){
+  sample <- rbind(sample, c(-10, 10))
+  sample <- rbind(sample, c( 10, -10))
+  return(sample)
+}
+
+# вычисление коэффициентов для оригинальных выборок
+cat("вычисление коэффициентов для оригинальных выборок:\n")
+s0 <- create_sample(0)
+compute_coefs(s0)
+
+s1 <- create_sample(0.5)
+compute_coefs(s1)
+
+s2 <- create_sample(0.9)
+compute_coefs(s2)
+
+# вычисление коэффициентов для загрязнных выборок
+cat("вычисление коэффициентов для загрязнных выборок:\n")
+s0_e <- add_emissions(s0)
+cat("ro = "); print(0)
+compute_coefs(s0_e)
+
+s1_e <- add_emissions(s1)
+cat("ro = "); print(0.5)
+compute_coefs(s1_e)
+
+s2_e <- add_emissions(s2)
+cat("ro = "); print(0.9)
+compute_coefs(s2_e)
