@@ -16,7 +16,7 @@ create_sample <- function(ro){
 }
 
 compute_coefs <- function(sample){
-  plot(sample)
+  plot(sample, xlab = "X", ylab = "Y")
   # коэффициент корреляции Пирсона:
   cat("коэффициент корреляции Пирсона:\n")
   r <- cor(sample[,1], sample[,2])
