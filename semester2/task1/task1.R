@@ -5,12 +5,21 @@ set.seed(17031993)
 # Инициализация выборок и вычисление их характеристик
 # =======================================================
 
+# Доверительная вероятность
+kConfProb <- 0.95
+
 # Размеры выборок и смещение матожидания
 sampleVolumes <- c(10, 20, 100)
 meanShifts <- c(0.1, 0.5, 1)
 
 volumesNumber <- length(sampleVolumes)
 meansNumber <- length(meanShifts)
+
+# Число степеней свободы
+freedomDegrees <- vector(mode="numeric", length=volumesNumber)
+for(i in 1:length(sampleVolumes)){
+    freedomDegrees[i] <- 2 * sampleVolumes[i] - 2
+}
 
 standartSample <- vector("list", volumesNumber)
 for(i in 1:length(sampleVolumes)){
@@ -50,17 +59,31 @@ TTest <- function(s1, s2){
 
 # qt(.95, 18)
 
-
+# Вычисляет критерий для всех пар
 TTestRunner <- function(){
+    # Критическое значение
+    crits <- vector(mode="numeric", length=volumesNumber)
+    for(i in 1:volumesNumber){
+        crits[i] <- qt(kConfProb, freedomDegrees[i])
+    }
+
     cat("t-test:\n")
+    cat("N\tMeanShift\tt\tCritical\tH0\tEfficiency\n")
     for(i in 1:volumesNumber){ # по строкам в матрице
         for(j in 1:meansNumber){ # по столбцам в матрице
             s1 <- samples[[i, j]] # сдвинутая выборка
             s2 <- standartSample[[i]] # оригинальная выборка
+
             t <- TTest(s1, s2)
-            cat("N = ", sampleVolumes[i],
-                "\tshift = ", meanShifts[j],
-                "\tt = ", t, "\n")
+            eff <- t / crits[i]
+            pass <- if (eff <= 1) T else F
+
+            cat(sampleVolumes[i], "\t",
+                meanShifts[j], "\t",
+                t, "\t",
+                crits[i], "\t",
+                pass, "\t",
+                eff, "\n")
         }
     }
 }
