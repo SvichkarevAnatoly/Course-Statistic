@@ -114,7 +114,7 @@ KSTestRunner <- function(){
         crits[i] <- pkolm(kConfProb, freedomDegrees[i]) * sqrt(2*sampleVolumes[i] / (sampleVolumes[2]^2))
     }
 
-    cat("t-test:\n")
+    cat("KS-test:\n")
     cat("N\tMeanShift\tt\tCritical\tH0\tEfficiency\n")
     for(i in 1:volumesNumber){ # по строкам в матрице
         for(j in 1:meansNumber){ # по столбцам в матрице
@@ -153,3 +153,40 @@ KSTestRunner()
 # =======================================================
 # Критерий Вилкоксона
 # =======================================================
+
+wilcox.test(s1, s2, paired=TRUE)
+res <- wilcox.test(s1, s2, paired=TRUE)
+res$statistic
+# wilcox.test(s1, s1, paired=TRUE)
+
+qwilcox(0.95, 10, 10)
+
+# Вычисляет критерий для всех пар
+WTestRunner <- function(){
+    # Критическое значение
+    crits <- vector(mode="numeric", length=volumesNumber)
+    for(i in 1:volumesNumber){
+        crits[i] <- qwilcox(kConfProb, sampleVolumes[i], sampleVolumes[1]) 
+    }
+
+    cat("Wilcoxon-test:\n")
+    cat("N\tMeanShift\tt\tCritical\tH0\tEfficiency\n")
+    for(i in 1:volumesNumber){ # по строкам в матрице
+        for(j in 1:meansNumber){ # по столбцам в матрице
+            s1 <- samples[[i, j]] # сдвинутая выборка
+            s2 <- standartSample[[i]] # оригинальная выборка
+
+            D <- ks.test(s1, s2)$statistic
+            eff <- D / crits[i]
+            pass <- if (eff <= 1) T else F
+
+            cat(sampleVolumes[i], "\t",
+                meanShifts[j], "\t",
+                D, "\t",
+                crits[i], "\t",
+                pass, "\t",
+                eff, "\n")
+        }
+    }
+}
+WTestRunner()
