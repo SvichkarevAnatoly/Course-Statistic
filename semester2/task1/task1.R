@@ -1,5 +1,5 @@
 # Чтобы генерировались одинаковые выборки
-set.seed(17031993)
+set.seed(0)
 
 # =======================================================
 # Инициализация выборок и вычисление их характеристик
@@ -30,10 +30,8 @@ for(i in 1:length(sampleVolumes)){
 
 samples <- matrix(rep(list(), volumesNumber*meansNumber),
                  nrow = meansNumber, ncol = volumesNumber)
-samplesMeans <- matrix(volumesNumber*meansNumber,
-                 nrow = meansNumber, ncol = volumesNumber)
-samplesSDs <- matrix(volumesNumber*meansNumber,
-                 nrow = meansNumber, ncol = volumesNumber)
+samplesMeans <- matrix(0, nrow = meansNumber, ncol = volumesNumber)
+samplesSDs <- matrix(0, nrow = meansNumber, ncol = volumesNumber)
 
 for(i in 1:volumesNumber){ # по строкам в матрице
     for(j in 1:meansNumber){ # по столбцам в матрице
@@ -46,6 +44,7 @@ for(i in 1:volumesNumber){ # по строкам в матрице
 # =======================================================
 # Критерий t-Стьюдента
 # =======================================================
+# самописный критерий t-Стьюдента
 TTest <- function(s1, s2){
     s1Mean <- mean(s1)
     s2Mean <- mean(s2)
@@ -77,8 +76,9 @@ TTestRunner <- function(){
             s2 <- standartSample[[i]] # оригинальная выборка
 
             t <- TTest(s1, s2)
-            eff <- t / crits[i]
-            pass <- if (eff <= 1) T else F
+            eff <- (crits[i] - t) / crits[i] # чем больше разница, тем лучше,
+            # 0 - худший вариант, <0 просто сравнивать на сколько хуже
+            pass <- if (t <= crits[i]) T else F
 
             cat(sampleVolumes[i], "\t",
                 meanShifts[j], "\t",
