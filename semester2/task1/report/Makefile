@@ -12,5 +12,4 @@ clean:
 	@rm -f ${report}.{ps,log,aux,out,dvi,bbl,blg}
 
 cleanall:	clean
-	@rm -f ${report}.{ps,log,aux,out,dvi,bbl,blg}
 	@rm -f ${report}.pdf
