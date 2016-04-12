@@ -10,7 +10,7 @@
 \usepackage{listings} % Для вставки кусков кода
 \usepackage{float} % Для точного позиционирования картинок
 
-\title{Отчёт 1\protect\\
+\title{Отчёт 1\\
 Исследование критериев\\
 Стьюдента, Колмогорова-Смирнова
 и Уилкоксона (Манна-Уитни)} % заголовок документа
@@ -35,5 +35,65 @@
 \end{enumerate}
 
 \section*{Выполнение}
+
+На следующих таблицах представлены результаты вычислений критериев:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{N} & \textbf{MeanShift} & \textbf{t} &
+\textbf{Critical} & \textbf{$H_0$} & \textbf{Efficiency} \\ \hline
+10  & 0.1       & 1.222103  & 2.100922 & TRUE  & 0.4183017  \\ \hline
+10  & 0.5       & 0.7384197 & 2.100922 & TRUE  & 0.6485259  \\ \hline
+10  & 1         & 1.702906  & 2.100922 & TRUE  & 0.1894485  \\ \hline
+20  & 0.1       & 0.9361901 & 2.024394 & TRUE  & 0.5375455  \\ \hline
+20  & 0.5       & 3.231181  & 2.024394 & FALSE & -0.5961227 \\ \hline
+20  & 1         & 4.629824  & 2.024394 & FALSE & -1.287017  \\ \hline
+100 & 0.1       & 1.023205  & 1.972017 & TRUE  & 0.4811381  \\ \hline
+100 & 0.5       & 4.356737  & 1.972017 & FALSE & -1.209279  \\ \hline
+100 & 1         & 6.878317  & 1.972017 & FALSE & -2.487959  \\ \hline
+\end{tabular}
+\caption{t-test}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{N} & \textbf{MeanShift} & \textbf{ks} &
+\textbf{Critical} & \textbf{$H_0$} & \textbf{Efficiency} \\ \hline
+10  & 0.1       & 0.5  & 0.40925  & FALSE & -0.2217471 \\ \hline
+10  & 0.5       & 0.4  & 0.40925  & TRUE  & 0.02260232 \\ \hline
+10  & 1         & 0.4  & 0.40925  & TRUE  & 0.02260232 \\ \hline
+20  & 0.1       & 0.25 & 0.29408  & TRUE  & 0.1498912  \\ \hline
+20  & 0.5       & 0.4  & 0.29408  & FALSE & -0.3601741 \\ \hline
+20  & 1         & 0.55 & 0.29408  & FALSE & -0.8702394 \\ \hline
+100 & 0.1       & 0.13 & 0.13403  & TRUE  & 0.0300679  \\ \hline
+100 & 0.5       & 0.34 & 0.13403  & FALSE & -1.536746  \\ \hline
+100 & 1         & 0.43 & 0.13403  & FALSE & -2.208237  \\ \hline
+\end{tabular}
+\caption{KS-test}
+\end{table}
+
+\begin{table}[H]
+\centering
+\label{my-label}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{N} & \textbf{MeanShift} & \textbf{u} &
+\textbf{Critical} & \textbf{$H_0$} & \textbf{Efficiency} \\ \hline
+10  & 0.1       & 34   & 32       & FALSE & -0.0625    \\ \hline
+10  & 0.5       & 40   & 32       & FALSE & -0.25      \\ \hline
+10  & 1         & 70   & 32       & FALSE & -1.1875    \\ \hline
+20  & 0.1       & 214  & 151      & FALSE & -0.4172185 \\ \hline
+20  & 0.5       & 300  & 151      & FALSE & -0.986755  \\ \hline
+20  & 1         & 333  & 151      & FALSE & -1.205298  \\ \hline
+100 & 0.1       & 5422 & 3000     & FALSE & -0.8073333 \\ \hline
+100 & 0.5       & 6691 & 3000     & FALSE & -1.230333  \\ \hline
+100 & 1         & 7542 & 3000     & FALSE & -1.514     \\ \hline
+\end{tabular}
+\caption{Wilcoxon-test}
+\end{table}
 
 \end{document} % Конец документа
