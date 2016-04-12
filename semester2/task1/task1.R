@@ -91,28 +91,16 @@ TTestRunner <- function(){
 }
 TTestRunner()
 
-# Для проверки правильности расчётов t
-# s1 <- standartSample[[1]]
-# s2 <- samples[[1, 2]]
-# t_test(s2,s1)
-# t.test(s2,s1, var.equal=TRUE, paired=FALSE)
-
 # =======================================================
 # Критерий Колмагорова-Смирнова
 # =======================================================
 
-# Для использования pkolm
-library(kolmim)
-# install.packages("kolmim")
-
 # Вычисляет критерий для всех пар
 KSTestRunner <- function(){
     # Критическое значение
-    crits <- vector(mode="numeric", length=volumesNumber)
-    for(i in 1:volumesNumber){
-        # http://www.real-statistics.com/non-parametric-tests/two-sample-kolmogorov-smirnov-test/
-        crits[i] <- pkolm(kConfProb, freedomDegrees[i]) * sqrt(2*sampleVolumes[i] / (sampleVolumes[2]^2))
-    }
+    # http://onlinelibrary.wiley.com/doi/10.1002/9781119961260.app3/pdf
+    # http://dxdy.ru/topic16954.html
+    crits <- c(0.40925, 0.29408, 0.13403)
 
     cat("KS-test:\n")
     cat("N\tMeanShift\tt\tCritical\tH0\tEfficiency\n")
@@ -122,8 +110,9 @@ KSTestRunner <- function(){
             s2 <- standartSample[[i]] # оригинальная выборка
 
             D <- ks.test(s1, s2)$statistic
-            eff <- D / crits[i]
-            pass <- if (eff <= 1) T else F
+            eff <- (crits[i] - D) / crits[i] # чем больше разница, тем лучше,
+            # 0 - худший вариант, <0 просто сравнивать на сколько хуже
+            pass <- if (D <= crits[i]) T else F
 
             cat(sampleVolumes[i], "\t",
                 meanShifts[j], "\t",
@@ -135,20 +124,6 @@ KSTestRunner <- function(){
     }
 }
 KSTestRunner()
-
-# Для проверки правильности расчётов t
-# s1 <- standartSample[[1]]
-# s2 <- samples[[1, 2]]
-# res <- ks.test(s1,s2)
-# res$statistic
-# res$alternative
-# res$method
-# res$data.name
-# pk <- pkolm(0.2, freedomDegrees[1])
-# pk
-# crit <- pk * sqrt((sampleVolumes[1]+sampleVolumes[1]) / (sampleVolumes[1]*sampleVolumes[1]))
-# crit
-# ks.test(s1,s1)
 
 # =======================================================
 # Критерий Вилкоксона
