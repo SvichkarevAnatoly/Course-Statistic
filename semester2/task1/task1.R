@@ -129,20 +129,13 @@ KSTestRunner()
 # Критерий Вилкоксона
 # =======================================================
 
-wilcox.test(s1, s2, paired=TRUE)
-res <- wilcox.test(s1, s2, paired=TRUE)
-res$statistic
-# wilcox.test(s1, s1, paired=TRUE)
-
-qwilcox(0.95, 10, 10)
+# qwilcox(0.05, 100, 100)
 
 # Вычисляет критерий для всех пар
 WTestRunner <- function(){
     # Критическое значение
-    crits <- vector(mode="numeric", length=volumesNumber)
-    for(i in 1:volumesNumber){
-        crits[i] <- qwilcox(kConfProb, sampleVolumes[i], sampleVolumes[1]) 
-    }
+    # из книги для 10 и 20, для 100 подогнал по логике
+    crits <- c(32, 151, 3000)
 
     cat("Wilcoxon-test:\n")
     cat("N\tMeanShift\tt\tCritical\tH0\tEfficiency\n")
@@ -151,9 +144,10 @@ WTestRunner <- function(){
             s1 <- samples[[i, j]] # сдвинутая выборка
             s2 <- standartSample[[i]] # оригинальная выборка
 
-            D <- ks.test(s1, s2)$statistic
-            eff <- D / crits[i]
-            pass <- if (eff <= 1) T else F
+            D <- wilcox.test(s1, s2)$statistic
+            eff <- (crits[i] - D) / crits[i] # чем больше разница, тем лучше,
+            # 0 - худший вариант, <0 просто сравнивать на сколько хуже
+            pass <- if (D <= crits[i]) T else F
 
             cat(sampleVolumes[i], "\t",
                 meanShifts[j], "\t",
