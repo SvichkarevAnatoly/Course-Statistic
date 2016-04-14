@@ -19,7 +19,7 @@ for(v in volumes){
         }
         median <- median / N
         trMean <- trMean / N
-        # cat(v, alpha, median, trMean, "\n", sep="\t")
+        cat(v, alpha, median, trMean, "\n", sep="\t")
     }
 }
 
