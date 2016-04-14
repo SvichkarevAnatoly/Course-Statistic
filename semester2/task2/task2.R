@@ -50,14 +50,14 @@ for(eps in epses){
     }
 }
 # print(medians) # для отладки
-plot(epses, medians, type="o", pch=18, col="blue", lty=1)
+plot(epses, medians, xlab="Epsilon", ylab="Median", type="o", pch=18, col="blue", lty=1)
 
 # вывод для усечённого среднего
 colors <- rainbow(lenAlphas)
-plot(epses, trMeans[[1]], type="l", col=colors[1])
+plot(epses, trMeans[[1]], xlab="Epsilon", ylab="Trim mean", type="l", col=colors[1])
 for(i in 2:lenAlphas){
-    lines(epses, trMeans[[i]], type="l", col=colors[i])
+    lines(epses, trMeans[[i]], xlab="Epsilon", ylab="Trim mean", type="l", col=colors[i])
 }
 linetype <- rep("l", lenAlphas) 
 plotchar <- seq(18,18+lenAlphas,1)
-legend("topleft", "(x,y)", alphas, cex=1, col=colors, lty=1, title="Усечённое среднее")
+legend("topleft", "(x,y)", alphas, cex=1, col=colors, lty=1, title="alpha")
