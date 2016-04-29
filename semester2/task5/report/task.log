@@ -16,7 +16,7 @@
 + xlab="Numer of Clusters", ylab="Number of Criteria",
 + main="Number of Clusters Chosen by 26 Criteria")
 > fit.km <- kmeans(dataStandart, 3, nstart=25)
-> fit.km$size # число экземпляров в каждом кластере
+> fit.km$size
 [1] 47 50 53
 > fit.km$centers
         Attr1       Attr2      Attr3      Attr4
